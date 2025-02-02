@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
 
 def scrape_text_from_url(url):
     try:
@@ -19,10 +20,6 @@ def scrape_text_from_url(url):
         print(f"Error fetching {url}: {e}")
         return None
 
-
-import requests
-from bs4 import BeautifulSoup
-import pandas as pd
 
 def fetch_wikipedia_html(search_keyword, lang="en"):
     """

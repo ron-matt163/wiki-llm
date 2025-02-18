@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from io import StringIO
 import pandas as pd
 
 def scrape_text_from_url(url):
@@ -68,13 +69,14 @@ def extract_text_and_tables(wikipedia_html):
             continue
 
         try:
-            df = pd.read_html(str(table), flavor="bs4")[0]
+            df = pd.read_html(StringIO(str(table)), flavor="bs4")[0]
             if len(df) > 1:  # Ensure the table has more than just headers
                 tables.append(df)
         except ValueError:
             print(f"Skipping table {i}: Could not parse.")
 
     return clean_text, tables
+
 
 def scrape_wikipedia_page(search_keyword):
     """
@@ -99,7 +101,7 @@ if __name__ == "__main__":
     if scraped_text:
         print(scraped_text[:1000])
 
-    search_term = "Erling Haaland"  # Wikipedia page title
+    search_term = "2023–24 Premier League"  # Wikipedia page title
     clean_text, tables =  scrape_wikipedia_page(search_term)
     print("\nExtracted Text (Preview):\n", clean_text[:1000], "...\n")
 
